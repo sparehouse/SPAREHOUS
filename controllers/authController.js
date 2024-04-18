@@ -13,15 +13,16 @@ async function signup(req, res) {
       return res.status(400).json({ message: 'Invalid email address' });
     }
     
-    // Check if password meets criteria
-    if (!password || password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+// Check if name is provided
+    if (!name) {
+  return res.status(400).json({ message: 'Name is required' });
     }
 
-    // Check if name is provided
-    if (!name) {
-      return res.status(400).json({ message: 'Name is required' });
+// Check if password meets criteria
+    if (!password || password.length < 6) {
+  return res.status(400).json({ message: 'Password must be at least 6 characters long' });
     }
+
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
