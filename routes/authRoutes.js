@@ -2,7 +2,7 @@
 
 const express = require('express');
 const { signup, login,getUserDetails, updateName, updatePassword, deleteAccount } = require('../controllers/authController');
-const authenticate = require('../middleware/authMiddleware');
+const authenticate = require('../middlewares/authMiddleware');
 const router = express.Router();
 
 router.post('/signup', signup);
