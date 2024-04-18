@@ -6,8 +6,8 @@ const { getUserDetails, updateName, updatePassword, deleteAccount } = require('.
 const { authenticate } = require('../middlewares/authMiddleware');
 
 router.get('/details', authenticate, getUserDetails);
-router.put('/name', authenticate, updateName);
-router.put('/password', authenticate, updatePassword);
+router.patch('/name', authenticate, updateName);
+router.patch('/password', authenticate, updatePassword);
 router.delete('/delete', authenticate, deleteAccount);
 
 module.exports = router;
