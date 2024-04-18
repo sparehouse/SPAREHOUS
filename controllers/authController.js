@@ -57,9 +57,9 @@ async function login(req, res) {
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id }, 'secret', { expiresIn: '1h' });
-    res.json({ token });
+    // Set userId in session
+    req.session.userId = user._id;
+    res.json({ message: 'Login successful' });
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Server error' });
