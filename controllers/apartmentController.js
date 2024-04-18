@@ -36,6 +36,12 @@ async function getApartmentsByBeds(req, res) {
 async function getApartmentsByPriceRange(req, res) {
   try {
     const { minPrice, maxPrice } = req.query;
+    
+    // Check if minPrice is greater than maxPrice
+    if (parseInt(minPrice) > parseInt(maxPrice)) {
+      return res.status(400).json({ message: 'minPrice cannot be greater than maxPrice' });
+    }
+
     const apartments = await Apartment.find({ price: { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) } });
     res.json(apartments);
   } catch (error) {
@@ -43,6 +49,7 @@ async function getApartmentsByPriceRange(req, res) {
     res.status(500).json({ message: 'Server error' });
   }
 }
+
 
 
 module.exports = { getAllApartments,getApartmentsByLocation, getApartmentsByBeds, getApartmentsByPriceRange };
