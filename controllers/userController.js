@@ -22,7 +22,12 @@ async function getUserDetails(req, res) {
   // Function to update user's name
   async function updateName(req, res) {
     try {
-      const userId = req.user.userId; // Extract user ID from request object
+      // Check if userId exists in session
+      if (!req.session || !req.session.userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+  
+      const userId = req.session.userId; // Extract user ID from session
       const { name } = req.body;
       await User.findByIdAndUpdate(userId, { name });
       res.json({ message: 'Name updated successfully' });
@@ -31,6 +36,7 @@ async function getUserDetails(req, res) {
       res.status(500).json({ message: 'Server error' });
     }
   }
+  
   
   // Function to update user's password
   async function updatePassword(req, res) {
