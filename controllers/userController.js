@@ -2,11 +2,16 @@ const User = require('../models/Users');
 // Function to get user details
 async function getUserDetails(req, res) {
     try {
-      const userId = req.user.userId; // Extract user ID from request object
+      const userId = req.session.userId; // Retrieve user ID from session
+      if (!userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
+      
       res.json(user);
     } catch (error) {
       console.error('Error fetching user details:', error);
