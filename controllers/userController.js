@@ -41,6 +41,11 @@ async function getUserDetails(req, res) {
   // Function to update user's password
   async function updatePassword(req, res) {
     try {
+      // Check if userId exists in req.user
+      if (!req.user || !req.user.userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+  
       const userId = req.user.userId; // Extract user ID from request object
       const { password } = req.body;
       await User.findByIdAndUpdate(userId, { password });
@@ -51,9 +56,13 @@ async function getUserDetails(req, res) {
     }
   }
   
-  // Function to delete user account
   async function deleteAccount(req, res) {
     try {
+      // Check if userId exists in req.user
+      if (!req.user || !req.user.userId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+  
       const userId = req.user.userId; // Extract user ID from request object
       await User.findByIdAndDelete(userId);
       res.json({ message: 'Account deleted successfully' });
@@ -62,4 +71,5 @@ async function getUserDetails(req, res) {
       res.status(500).json({ message: 'Server error' });
     }
   }
+  
   module.exports = { getUserDetails, updateName, updatePassword, deleteAccount };
