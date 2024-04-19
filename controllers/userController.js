@@ -1,4 +1,5 @@
 const User = require('../models/Users');
+const bcrypt = require('bcrypt');
 // Function to get user details
 async function getUserDetails(req, res) {
     try {
@@ -48,7 +49,13 @@ async function getUserDetails(req, res) {
 
         const userId = req.session.userId; // Extract user ID from session
         const { password } = req.body;
-        await User.findByIdAndUpdate(userId, { password });
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Update the password in the database
+        await User.findByIdAndUpdate(userId, { password: hashedPassword });
+        
         res.json({ message: 'Password updated successfully' });
     } catch (error) {
         console.error('Error updating password:', error);
