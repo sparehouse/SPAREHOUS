@@ -41,20 +41,21 @@ async function getUserDetails(req, res) {
   // Function to update user's password
   async function updatePassword(req, res) {
     try {
-      // Check if userId exists in req.user
-      if (!req.user || !req.user.userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-  
-      const userId = req.user.userId; // Extract user ID from request object
-      const { password } = req.body;
-      await User.findByIdAndUpdate(userId, { password });
-      res.json({ message: 'Password updated successfully' });
+        // Check if userId exists in session
+        if (!req.session || !req.session.userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const userId = req.session.userId; // Extract user ID from session
+        const { password } = req.body;
+        await User.findByIdAndUpdate(userId, { password });
+        res.json({ message: 'Password updated successfully' });
     } catch (error) {
-      console.error('Error updating password:', error);
-      res.status(500).json({ message: 'Server error' });
+        console.error('Error updating password:', error);
+        res.status(500).json({ message: 'Server error' });
     }
-  }
+}
+
   
   async function deleteAccount(req, res) {
     try {
