@@ -57,20 +57,21 @@ async function getUserDetails(req, res) {
 }
 
   
-  async function deleteAccount(req, res) {
+async function deleteAccount(req, res) {
     try {
-      // Check if userId exists in req.user
-      if (!req.user || !req.user.userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
-  
-      const userId = req.user.userId; // Extract user ID from request object
-      await User.findByIdAndDelete(userId);
-      res.json({ message: 'Account deleted successfully' });
+        // Check if userId exists in req.user
+        if (!req.user || !req.user.userId) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const userId = req.user.userId; // Extract user ID from request object
+        await User.findByIdAndDelete(userId);
+        res.json({ message: 'Account deleted successfully' });
     } catch (error) {
-      console.error('Error deleting account:', error);
-      res.status(500).json({ message: 'Server error' });
+        console.error('Error deleting account:', error);
+        res.status(500).json({ message: 'Server error' });
     }
-  }
+}
+
   
   module.exports = { getUserDetails, updateName, updatePassword, deleteAccount };
