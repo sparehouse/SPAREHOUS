@@ -42,6 +42,10 @@ async function getUserDetails(req, res) {
 
         const userId = req.session.userId; // Extract user ID from session
         const { password } = req.body;
+        
+        if (!password || password.length < 6) {
+          return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+      }
 
         // Hash the new password
         const hashedPassword = await bcrypt.hash(password, 10);
