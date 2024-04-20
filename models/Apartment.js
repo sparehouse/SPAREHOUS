@@ -1,4 +1,4 @@
-// src/models/Apartment.js
+
 
 const mongoose = require('mongoose');
 

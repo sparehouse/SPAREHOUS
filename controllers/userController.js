@@ -4,9 +4,7 @@ const bcrypt = require('bcrypt');
 async function getUserDetails(req, res) {
     try {
       const userId = req.session.userId; // Retrieve user ID from session
-      if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
+     
       
       const user = await User.findById(userId);
       if (!user) {
@@ -23,10 +21,8 @@ async function getUserDetails(req, res) {
   // Function to update user's name
   async function updateName(req, res) {
     try {
-      // Check if userId exists in session
-      if (!req.session || !req.session.userId) {
-        return res.status(401).json({ message: 'Unauthorized' });
-      }
+      
+     
   
       const userId = req.session.userId; // Extract user ID from session
       const { name } = req.body;
@@ -42,10 +38,7 @@ async function getUserDetails(req, res) {
   // Function to update user's password
   async function updatePassword(req, res) {
     try {
-        // Check if userId exists in session
-        if (!req.session || !req.session.userId) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
+      
 
         const userId = req.session.userId; // Extract user ID from session
         const { password } = req.body;
@@ -66,11 +59,7 @@ async function getUserDetails(req, res) {
   
 async function deleteAccount(req, res) {
     try {
-        // Check if userId exists in session
-        if (!req.session || !req.session.userId) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
+       
         const userId = req.session.userId; // Extract user ID from session
         await User.findByIdAndDelete(userId);
         res.json({ message: 'Account deleted successfully' });

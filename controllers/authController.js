@@ -1,4 +1,4 @@
-// src/controllers/authController.js
+
 
 const bcrypt = require('bcryptjs');
 const User = require('../models/Users');

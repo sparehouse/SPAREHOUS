@@ -1,4 +1,4 @@
-// src/controllers/apartmentController.js
+
 
 const Apartment = require('../models/Apartment');
 
