@@ -52,7 +52,19 @@ async function getApartmentsByPriceRange(req, res) {
 async function addApartment(req, res) {
   try {
     // Extract apartment details from request body
-    const { name, location, price, beds, space, phoneNumber, pictureUrls } = req.body;
+    const { name, location, price, beds, space, phoneNumber } = req.body;
+
+    // Construct array to store image URLs
+    let pictureUrls = [];
+
+    // Check if files were uploaded
+    if (req.files) {
+      // Loop through uploaded files
+      req.files.forEach(file => {
+        // Append the URL of each uploaded image to the pictureUrls array
+        pictureUrls.push('http://your-backend-url/' + file.filename);
+      });
+    }
 
     // Create a new apartment instance
     const newApartment = new Apartment({
