@@ -8,5 +8,5 @@ router.get('/apartments', apartmentController.getAllApartments);
 router.get('/apartments/location', apartmentController.getApartmentsByLocation);
 router.get('/apartments/beds', apartmentController.getApartmentsByBeds);
 router.get('/apartments/price', apartmentController.getApartmentsByPriceRange);
-
+router.post('/apartments/add', apartmentController.addApartment);
 module.exports = router;

@@ -49,7 +49,32 @@ async function getApartmentsByPriceRange(req, res) {
     res.status(500).json({ message: 'Server error' });
   }
 }
+async function addApartment(req, res) {
+  try {
+    // Extract apartment details from request body
+    const { name, location, price, beds, space, phoneNumber, pictureUrls } = req.body;
+
+    // Create a new apartment instance
+    const newApartment = new Apartment({
+      name,
+      location,
+      price,
+      beds,
+      space,
+      phoneNumber,
+      pictureUrls
+    });
+
+    // Save the new apartment to the database
+    await newApartment.save();
+
+    res.status(201).json({ message: 'Apartment added successfully', apartment: newApartment });
+  } catch (error) {
+    console.error('Error adding apartment:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
 
 
 
-module.exports = { getAllApartments,getApartmentsByLocation, getApartmentsByBeds, getApartmentsByPriceRange };
+module.exports = { getAllApartments,getApartmentsByLocation, getApartmentsByBeds, getApartmentsByPriceRange, addApartment };
