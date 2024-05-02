@@ -64,5 +64,20 @@ async function login(req, res) {
     res.status(500).json({ message: 'Server error' });
   }
 }
-
-module.exports = { signup, login };
+async function logout(req, res) {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error logging out:', err);
+        res.status(500).json({ message: 'Server error' });
+      } else {
+        // Session destroyed successfully
+        res.json({ message: 'Logout successful' });
+      }
+    });
+  } catch (error) {
+    console.error('Error logging out:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+module.exports = { signup, login, logout };
