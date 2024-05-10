@@ -38,27 +38,39 @@ async function getUserDetails(req, res) {
   // Function to update user's password
   async function updatePassword(req, res) {
     try {
-      
-
-        const userId = req.session.userId; // Extract user ID from session
-        const { password } = req.body;
-        
-        if (!password || password.length < 6) {
-          return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+      const userId = req.session.userId; // Extract user ID from session
+      const { oldPassword, newPassword } = req.body;
+  
+      // Retrieve the user from the database
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
       }
-
-        // Hash the new password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Update the password in the database
-        await User.findByIdAndUpdate(userId, { password: hashedPassword });
-        
-        res.json({ message: 'Password updated successfully' });
+  
+      // Verify the old password
+      const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: 'Incorrect old password' });
+      }
+  
+      // Validate the new password
+      if (!newPassword || newPassword.length < 6) {
+        return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+      }
+  
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+      // Update the password in the database
+      await User.findByIdAndUpdate(userId, { password: hashedPassword });
+  
+      res.json({ message: 'Password updated successfully' });
     } catch (error) {
-        console.error('Error updating password:', error);
-        res.status(500).json({ message: 'Server error' });
+      console.error('Error updating password:', error);
+      res.status(500).json({ message: 'Server error' });
     }
-}
+  }
+  
 
   
 async function deleteAccount(req, res) {

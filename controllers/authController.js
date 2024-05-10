@@ -58,7 +58,7 @@ async function login(req, res) {
     }
     // Set userId in session
     req.session.userId = user._id;
-    res.json({ message: 'Login successful' });
+    res.json({ message: 'Login successful', sessionId: user._id });
   } catch (error) {
     console.error('Error logging in:', error);
     res.status(500).json({ message: 'Server error' });
