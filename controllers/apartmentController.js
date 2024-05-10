@@ -59,13 +59,14 @@ async function addApartment(req, res) {
 
     // Check if files were uploaded
     if (req.files) {
+      const ngrokUrl = req.protocol + '://' + req.get('host');
       // Loop through uploaded files
       req.files.forEach(file => {
-        // Append the URL of each uploaded image to the pictureUrls array
-        pictureUrls.push('http://localhost:3000/uploads/' + file.filename);
+          // Append the URL of each uploaded image to the pictureUrls array
+          pictureUrls.push(ngrokUrl + '/uploads/' + file.filename);
       });
-    }
-
+  }
+  
     // Create a new apartment instance
     const newApartment = new Apartment({
       name,
