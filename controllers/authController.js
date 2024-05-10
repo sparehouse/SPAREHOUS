@@ -35,6 +35,7 @@ async function signup(req, res) {
     // Create new user
     const newUser = new User({ email, password: hashedPassword, name });
     await newUser.save();
+    req.session.userId = newUser._id;
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
