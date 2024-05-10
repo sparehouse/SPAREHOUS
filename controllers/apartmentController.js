@@ -62,7 +62,7 @@ async function addApartment(req, res) {
       // Loop through uploaded files
       req.files.forEach(file => {
         // Append the URL of each uploaded image to the pictureUrls array
-        pictureUrls.push('http://192.168.8.5:3000/uploads/' + file.filename);
+        pictureUrls.push('http://localhost:3000/uploads/' + file.filename);
       });
     }
 
