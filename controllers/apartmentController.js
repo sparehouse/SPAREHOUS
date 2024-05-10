@@ -1,6 +1,7 @@
 
 
 const Apartment = require('../models/Apartment');
+const axios = require('axios');
 
 async function getAllApartments(req, res) {
   try {
@@ -59,7 +60,7 @@ async function addApartment(req, res) {
 
     // Check if files were uploaded
     if (req.files) {
-      const ngrokUrl ='https://fdcd-196-133-130-50.ngrok-free.app/'
+      const ngrokUrl =await getNgrokPublicUrl();
       // Loop through uploaded files
       req.files.forEach(file => {
           // Append the URL of each uploaded image to the pictureUrls array
