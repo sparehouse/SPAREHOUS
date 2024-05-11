@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 app.use(session({
   secret: '2e5ae7090f6d72092df82ccc868f2f2ae73a23ec148b123ad2680eb7c6c76ea3', // Replace 'your_secret_key_here' with your actual secret key
